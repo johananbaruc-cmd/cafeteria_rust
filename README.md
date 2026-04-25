@@ -23,36 +23,37 @@ verPedidosPorEstado	estado: u8	Filtra pedidos por estado
 
 Estados disponibles:
 
-    0 - Pendiente
+0 - Pendiente
 
-    1 - En Preparación
+1 - En Preparación
 
-    2 - Listo
+2 - Listo
 
-    3 - Entregado
+3 - Entregado
 
-🚀 Cómo usar
+## 🚀 Cómo usar
 En Solana Playground:
 
-    Crear el programa:
+Crear el programa:
 
-        Copia el código de lib.rs en el editor
+Copia el código de lib.rs en el editor
 
-        Haz clic en Build y luego en Deploy
+Haz clic en Build y luego en Deploy
 
-🛠️ Tecnologías
+## 🛠️ Tecnologías
 Tecnología	Versión	Uso
 Solana	1.16+	Blockchain
 Anchor	0.29+	Framework
 Rust	1.70+	Smart Contract
 TypeScript	4.9+	Tests y cliente
-🔒 Seguridad
 
-    Validación de bebidas: Solo las del menú son aceptadas
+## 🔒 Seguridad
 
-    has_one constraint: Verifica que el owner sea correcto
+ Validación de bebidas: Solo las del menú son aceptadas
 
-    PDA verification: Las seeds deben coincidir exactamente
+ has_one constraint: Verifica que el owner sea correcto
+
+  PDA verification: Las seeds deben coincidir exactamente
 
 ## 🍹 Menú de bebidas y precios (en SOL)
 
