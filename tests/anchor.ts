@@ -1,16 +1,8 @@
-import * as anchor from "@coral-xyz/anchor";
-import * as web3 from "@solana/web3.js";
-import type { CafeteriaLocal } from "../target/types/cafeteria_local";
 // Tests para la Cafetería Local
 describe("Cafetería Local", () => {
-  // Configure the client to use the local cluster
-  anchor.setProvider(anchor.AnchorProvider.env());
-
-  const program = anchor.workspace.CafeteriaLocal as anchor.Program<CafeteriaLocal>;
-  
-  const program = program;
+  const program = pg.program;
   const wallet = pg.wallet;
-  const PROGRAM_ID = new web3.PublicKey("H7VF6KMhcHHcm8W72KWaEZAYTG7mixYVNpHPQc8Jq2iK");
+  const PROGRAM_ID = new web3.PublicKey("GUsWSVcmHnag3hQ2sqWDai2FFsX4H8XZv4gxFBYTWefh");
   
   const [cafeteriaPDA] = web3.PublicKey.findProgramAddressSync(
     [Buffer.from("cafeteria"), wallet.publicKey.toBuffer()],
@@ -25,7 +17,7 @@ describe("Cafetería Local", () => {
   });
 
   it("1️⃣ Crear Cafetería (si no existe)", async () => {
-    const accountInfo = await program.provider.connection.getAccountInfo(cafeteriaPDA);
+    const accountInfo = await pg.connection.getAccountInfo(cafeteriaPDA);
     
     if (accountInfo === null) {
       const tx = await program.methods
@@ -54,7 +46,7 @@ describe("Cafetería Local", () => {
     console.log("  ✅ Pedido creado! Tx:", tx);
     
     // Esperar confirmación de la transacción
-    await program.provider.connection.confirmTransaction(tx);
+    await pg.connection.confirmTransaction(tx);
     
     const cafeteria = await program.account.cafeteria.fetch(cafeteriaPDA);
     console.log("  📊 Total pedidos en cuenta:", cafeteria.contadorPedidos);
@@ -80,7 +72,7 @@ describe("Cafetería Local", () => {
     
     console.log("  ✅ Segundo pedido creado! Tx:", tx);
     
-    await program.provider.connection.confirmTransaction(tx);
+    await pg.connection.confirmTransaction(tx);
     
     const after = await program.account.cafeteria.fetch(cafeteriaPDA);
     console.log("  📊 Pedidos después:", after.pedidos.length);
@@ -102,7 +94,7 @@ describe("Cafetería Local", () => {
         .rpc();
       
       console.log("  ✅ Estado actualizado! Tx:", tx);
-      await program.provider.connection.confirmTransaction(tx);
+      await pg.connection.confirmTransaction(tx);
     } else {
       console.log("  ⚠️ No hay pedidos para actualizar");
     }
@@ -118,7 +110,7 @@ describe("Cafetería Local", () => {
       .rpc();
     
     console.log("  ✅ Pedidos listados! Tx:", tx);
-    await program.provider.connection.confirmTransaction(tx);
+    await pg.connection.confirmTransaction(tx);
     
     const cafeteria = await program.account.cafeteria.fetch(cafeteriaPDA);
     console.log("  📊 Total en blockchain:", cafeteria.pedidos.length, "pedidos");
@@ -134,7 +126,7 @@ describe("Cafetería Local", () => {
       .rpc();
     
     console.log("  ✅ Pedidos filtrados! Tx:", tx);
-    await program.provider.connection.confirmTransaction(tx);
+    await pg.connection.confirmTransaction(tx);
   });
 
   it("7️⃣ Eliminar pedido", async () => {
@@ -154,7 +146,7 @@ describe("Cafetería Local", () => {
         .rpc();
       
       console.log("  ✅ Pedido eliminado! Tx:", tx);
-      await program.provider.connection.confirmTransaction(tx);
+      await pg.connection.confirmTransaction(tx);
       
       const after = await program.account.cafeteria.fetch(cafeteriaPDA);
       console.log("  📊 Pedidos antes:", beforeCount);
