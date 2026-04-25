@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 
-declare_id!("H7VF6KMhcHHcm8W72KWaEZAYTG7mixYVNpHPQc8Jq2iK");
+declare_id!("GUsWSVcmHnag3hQ2sqWDai2FFsX4H8XZv4gxFBYTWefh");
 
 #[program]
 pub mod cafeteria_local {
@@ -197,13 +197,13 @@ pub struct Cafeteria {
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, Debug)]
 pub struct Pedido {
-    pub id: u32,
-    pub cliente: String,
-    pub bebida: String,
-    pub cantidad: u32,
-    pub total: u64,
-    pub estado: EstadoPedido,
-    pub fecha: i64,
+    pub id: u32,                 // ID único del pedido
+    pub cliente: String,         // Nombre del cliente
+    pub bebida: String,          // Bebida solicitada
+    pub cantidad: u32,           // Cantidad
+    pub total: u64,              // Precio total
+    pub estado: EstadoPedido,    // Estado actual
+    pub fecha: i64,              // Timestamp de creación
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, Debug)]
@@ -236,6 +236,11 @@ pub struct GestionPedido<'info> {
     #[account(mut)]
     pub owner: Signer<'info>,
     
-    #[account(mut, has_one = owner)]
+    #[account(
+        mut,
+        seeds = [b"cafeteria", owner.key().as_ref()],
+        bump,
+        has_one = owner
+    )]
     pub cafeteria: Account<'info, Cafeteria>,
 }
