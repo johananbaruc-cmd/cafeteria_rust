@@ -12,6 +12,48 @@
 - **Actualizar** el estado de un pedido (Pendiente → EnPreparación → Listo → Entregado)
 - **Eliminar** pedidos existentes
 
+## 📡Instrucciones del Programa
+Instrucción	Parámetros	Descripción
+crearCafeteria	nombre: String	Inicializa una nueva cafetería
+crearPedido	cliente, bebida, cantidad	Agrega un nuevo pedido
+actualizarEstado	id, nuevo_estado	Cambia el estado de un pedido
+eliminarPedido	id	Elimina un pedido existente
+verPedidos	-	Muestra todos los pedidos
+verPedidosPorEstado	estado: u8	Filtra pedidos por estado
+
+Estados disponibles:
+
+    0 - Pendiente
+
+    1 - En Preparación
+
+    2 - Listo
+
+    3 - Entregado
+
+🚀 Cómo usar
+En Solana Playground:
+
+    Crear el programa:
+
+        Copia el código de lib.rs en el editor
+
+        Haz clic en Build y luego en Deploy
+
+🛠️ Tecnologías
+Tecnología	Versión	Uso
+Solana	1.16+	Blockchain
+Anchor	0.29+	Framework
+Rust	1.70+	Smart Contract
+TypeScript	4.9+	Tests y cliente
+🔒 Seguridad
+
+    Validación de bebidas: Solo las del menú son aceptadas
+
+    has_one constraint: Verifica que el owner sea correcto
+
+    PDA verification: Las seeds deben coincidir exactamente
+
 ## 🍹 Menú de bebidas y precios (en SOL)
 
 | Bebida | Precio |
@@ -47,57 +89,17 @@ pub struct Pedido {
     pub fecha: i64,
 }
 
-📡Instrucciones del Programa
-Instrucción	Parámetros	Descripción
-crearCafeteria	nombre: String	Inicializa una nueva cafetería
-crearPedido	cliente, bebida, cantidad	Agrega un nuevo pedido
-actualizarEstado	id, nuevo_estado	Cambia el estado de un pedido
-eliminarPedido	id	Elimina un pedido existente
-verPedidos	-	Muestra todos los pedidos
-verPedidosPorEstado	estado: u8	Filtra pedidos por estado
 
-Estados disponibles:
-
-    0 - Pendiente
-
-    1 - En Preparación
-
-    2 - Listo
-
-    3 - Entregado
-
-🚀 Cómo usar
-En Solana Playground:
-
-    Crear el programa:
-
-        Copia el código de lib.rs en el editor
-
-        Haz clic en Build y luego en Deploy
 
 Ejecutar tests:
-bash
 
 test
 
 Ejecutar el cliente interactivo:
-bash
 
 run
 
 
-🛠️ Tecnologías
-Tecnología	Versión	Uso
-Solana	1.16+	Blockchain
-Anchor	0.29+	Framework
-Rust	1.70+	Smart Contract
-TypeScript	4.9+	Tests y cliente
-🔒 Seguridad
 
-    Validación de bebidas: Solo las del menú son aceptadas
-
-    has_one constraint: Verifica que el owner sea correcto
-
-    PDA verification: Las seeds deben coincidir exactamente
 
     Error handling: Mensajes descriptivos para cada error
